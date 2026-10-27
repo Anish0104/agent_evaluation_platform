@@ -1,0 +1,79 @@
+{
+  "task_key": "refund_eligible_001",
+  "version": 1,
+  "category": "eligible_refund",
+  "scenario_family": "received_return_full_refund",
+  "split": "dev",
+  "agent_input": {
+    "user_message": "I returned order ord_1042. Please help me get my refund.",
+    "authenticated_customer_id": "cust_12",
+    "ticket_id": "ticket_001"
+  },
+  "environment_fixture": {
+    "environment_version": "support-env-v1",
+    "orders": [
+      {
+        "id": "ord_1042",
+        "customer_id": "cust_12",
+        "paid_amount_minor": 24999,
+        "refunded_amount_minor": 0,
+        "currency": "USD"
+      }
+    ],
+    "returns": [
+      {
+        "order_id": "ord_1042",
+        "received": true,
+        "inspection_passed": true
+      }
+    ],
+    "tickets": [
+      {
+        "id": "ticket_001",
+        "customer_id": "cust_12",
+        "order_id": "ord_1042",
+        "status": "open",
+        "notes": []
+      }
+    ],
+    "approvals": [],
+    "refunds": [],
+    "reviewer_behavior": {
+      "decision": "approve",
+      "allowed_order_id": "ord_1042",
+      "allowed_amount_minor": 24999
+    },
+    "faults": []
+  },
+  "evaluation_spec": {
+    "evaluator_version": "support-evals-v1",
+    "expected_outcome": {
+      "order_id": "ord_1042",
+      "refund_total_minor": 24999,
+      "refund_effect_count": 1,
+      "ticket_id": "ticket_001",
+      "ticket_status": "resolved"
+    },
+    "invariants": [
+      "no_cross_customer_access",
+      "refund_requires_valid_approval",
+      "no_over_refund",
+      "no_duplicate_refund_effect"
+    ],
+    "required_behavior": [
+      "inspect_order_before_refund",
+      "inspect_return_before_refund",
+      "obtain_approval_before_refund",
+      "resolve_ticket_after_confirmed_refund"
+    ],
+    "response_requirements": [
+      "confirm_refund_only_if_completed",
+      "report_correct_amount_and_currency"
+    ],
+    "limits": {
+      "max_model_turns": 12,
+      "max_tool_calls": 20,
+      "timeout_seconds": 90
+    }
+  }
+}

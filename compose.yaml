@@ -1,0 +1,22 @@
+name: agent-evaluation-platform
+
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: agent_eval
+      POSTGRES_PASSWORD: local_dev_password
+      POSTGRES_DB: agent_eval
+    ports:
+      - "127.0.0.1:5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U agent_eval -d agent_eval"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+volumes:
+  postgres_data:
