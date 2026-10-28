@@ -24,6 +24,7 @@ class TraceRecorder:
         event_type: str,
         payload: dict[str, Any],
         tool_call_id: str | None = None,
+        model_call_id: str | None = None,
     ) -> None:
         event = {
             "event_id": str(uuid4()),
@@ -33,6 +34,7 @@ class TraceRecorder:
             "event_type": event_type,
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "tool_call_id": tool_call_id,
+            "model_call_id": model_call_id,
             "payload": deepcopy(payload),
         }
 

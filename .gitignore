@@ -65,6 +65,9 @@ coverage.xml
 logs/
 *.log
 artifacts/
+artifacts/comparisons/
+artifacts/llm_runs/
+artifacts/llm_runs_post_investigation/
 exports/
 
 
@@ -89,3 +92,8 @@ htmlcov/
 
 migrations_scaffold_backup/
 models_scaffold_backup/
+
+artifacts/llm_runs/
+artifacts/llm_runs_post_investigation/
+artifacts/probes/
+artifacts/comparisons/
